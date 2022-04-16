@@ -1,5 +1,5 @@
 //our root app component
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import {TabsComponent} from './tabs/app-tabs.component';
 import {FormGroup} from "@angular/forms";
@@ -11,6 +11,8 @@ import ToDo, {PriorityType} from "./state/todo.model";
 import * as ToDoActions from "./state/actions/todo.action";
 import {map} from "rxjs/operators";
 import {BeginEditToDoAction} from "./state/actions/todo.action";
+import {TabComponent} from "./tabs/tab/app-tab.component";
+import {PersonEditComponent} from "./people/person-edit.component";
 
 @Component({
   selector: 'app',
@@ -49,10 +51,9 @@ import {BeginEditToDoAction} from "./state/actions/todo.action";
   `
 })
 export class AppComponent implements OnInit, OnDestroy {
-  @ViewChild('personEdit') editPersonTemplate: any;
-  @ViewChild('about') aboutTemplate: any;
-  @ViewChild(TabsComponent)
-  tabsComponent!: { openTab: (arg0: string, arg1: any, arg2: {}, arg3: boolean) => void; closeActiveTab: () => void; };
+  @ViewChild('personEdit') editPersonTemplate: ElementRef | undefined;
+  @ViewChild('about') aboutTemplate: ElementRef | undefined;
+  @ViewChild(TabsComponent) tabsComponent!: TabsComponent;
 
   form = new FormGroup({});
   model: {email: string} = { email: 'email@gmail.com' };
@@ -133,7 +134,13 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
   onOpenAbout() {
-    this.tabsComponent.openTab('About', this.aboutTemplate, {}, true);
+    const tabComponent: TabComponent | undefined = this.tabsComponent.dynamicTabs.find((tab: TabComponent) => tab.title === 'About');
+
+    if (tabComponent) {
+      this.tabsComponent.selectTab(tabComponent);
+    } else {
+      this.tabsComponent.openTab('About', this.aboutTemplate, null, true);
+    }
   }
 
   createNewIssue() {
