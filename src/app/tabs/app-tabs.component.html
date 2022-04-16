@@ -1,0 +1,12 @@
+<mat-card>
+<div class="nav nav-tabs">
+    <button mat-button *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">
+        <a href="#">{{tab.title}}</a>
+    </button>
+      <button mat-button *ngFor="let tab of dynamicTabs" (click)="selectTab(tab)" [class.active]="tab.active" class="button">
+        <a href="#">{{tab.title}} <span class="tab-close" *ngIf="tab.isCloseable" (click)="closeTab(tab)">x</span></a>
+      </button>
+    </div>
+    <ng-content></ng-content>
+    <ng-template dynamic-tabs #container></ng-template>
+</mat-card>
