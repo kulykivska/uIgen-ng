@@ -7,7 +7,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
       <thead>
         <th>Name</th>
         <th>Surname</th>
-        <th>Twitter</th>
         <th></th>
       </thead>
       <tbody>

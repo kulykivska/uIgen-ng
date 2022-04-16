@@ -2,6 +2,8 @@
 import { Component, ViewChild } from '@angular/core';
 
 import { TabsComponent } from './tabs/app-tabs.component';
+import {FormGroup} from "@angular/forms";
+import {FormlyFieldConfig} from "@ngx-formly/core";
 
 @Component({
   selector: 'app',
@@ -22,6 +24,14 @@ import { TabsComponent } from './tabs/app-tabs.component';
     <ng-template let-person="person" #personEdit>
       <person-edit [person]="person" (savePerson)="onPersonFormSubmit($event)"></person-edit>
     </ng-template>
+
+    <app-to-do></app-to-do>
+
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
   `
 })
 export class AppComponent {
@@ -30,6 +40,19 @@ export class AppComponent {
   @ViewChild(TabsComponent)
   tabsComponent!: { openTab: (arg0: string, arg1: any, arg2: {}, arg3: boolean) => void; closeActiveTab: () => void; };
 
+  form = new FormGroup({});
+  model: {email: string} = { email: 'email@gmail.com' };
+  fields: FormlyFieldConfig[] = [
+    {
+      key: 'email',
+      type: 'input',
+      templateOptions: {
+        label: 'Email address',
+        placeholder: 'Enter email',
+        required: true,
+      }
+    }
+  ];
   public people = [
     {
       id: 1,
@@ -38,6 +61,10 @@ export class AppComponent {
       twitter: '@juristr'
     }
   ];
+
+  onSubmit(model: {email: string}) {
+    console.log(model);
+  }
 
   onEditPerson(person: any) {
     this.tabsComponent.openTab(

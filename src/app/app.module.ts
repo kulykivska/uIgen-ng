@@ -8,16 +8,25 @@ import {TabComponent} from "./tabs/tab/app-tab.component";
 import {PeopleListComponent} from "./people/people-list.component";
 import {PersonEditComponent} from "./people/person-edit.component";
 import {DynamicTabsDirective} from "./tabs/dynamic-tabs.directive";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { EffectsModule } from '@ngrx/effects';
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
+import { StoreModule } from '@ngrx/store';
+
+import { ToDoEffects } from "./state/effects/todo.effects";
+import {ToDoComponent} from "./components/to-do.component";
+import {ToDoReducer} from "./state/reducers/todo.reducer";
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    ToDoComponent,
     TabsComponent,
     TabComponent,
     DynamicTabsDirective,
@@ -27,14 +36,20 @@ import {MatCardModule} from "@angular/material/card";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    StoreModule.forRoot({todos: ToDoReducer}),
+    EffectsModule.forRoot([ToDoEffects]),
+    FormlyModule.forRoot({ extras: { lazyRender: true } }),
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyBootstrapModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [TabsComponent]
 })
 export class AppModule { }
