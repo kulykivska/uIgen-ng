@@ -11,7 +11,7 @@ export const CreateToDoAction = createAction(
 export const BeginGetToDoAction = createAction('[ToDo] - Begin Get ToDo');
 
 export const SuccessGetToDoAction = createAction(
-  '[ToDo] - Sucess Get ToDo',
+  '[ToDo] - Success Get ToDo',
   props<{ payload: ToDo[] }>()
 );
 
@@ -20,8 +20,18 @@ export const BeginCreateToDoAction = createAction(
   props<{ payload: ToDo }>()
 );
 
+export const BeginEditToDoAction = createAction(
+  '[ToDo] - Begin Edit ToDo',
+  props<{ payload: ToDo }>()
+);
+
+export const SuccessEditToDoAction = createAction(
+  '[ToDo] - Edit ToDo',
+  props<{ payload: ToDo }>()
+);
+
 export const SuccessCreateToDoAction = createAction(
-  '[ToDo] - Sucess Create ToDo',
+  '[ToDo] - Success Create ToDo',
   props<{ payload: ToDo }>()
 );
 

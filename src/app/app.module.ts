@@ -21,11 +21,14 @@ import {ToDoComponent} from "./components/to-do.component";
 import {ToDoReducer} from "./state/reducers/todo.reducer";
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
+import {MatIconModule} from "@angular/material/icon";
+import {AboutComponent} from "./components/about/about.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    AboutComponent,
     ToDoComponent,
     TabsComponent,
     TabComponent,
@@ -42,6 +45,7 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
     BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,
+    MatIconModule,
     StoreModule.forRoot({todos: ToDoReducer}),
     EffectsModule.forRoot([ToDoEffects]),
     FormlyModule.forRoot({ extras: { lazyRender: true } }),

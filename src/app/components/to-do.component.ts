@@ -41,7 +41,7 @@ export class ToDoComponent implements OnInit {
   todoError: Error | null = null;
 
   createToDo() {
-    const todo: ToDo = { title: this.Title, description: this.Description, priority: this.Priority, assignee: this.Assignee, isCompleted: this.IsCompleted };
+    const todo: ToDo = { id: Math.round(Math.random() * 100), title: this.Title, description: this.Description, priority: this.Priority, assignee: this.Assignee, isCompleted: this.IsCompleted };
     this.store.dispatch(ToDoActions.BeginCreateToDoAction({ payload: todo }));
     this.setDefaultValues();
   }

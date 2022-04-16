@@ -1,5 +1,5 @@
 export default class ToDo {
-  id?: number;
+  id!: number;
   title!: string;
   description!: string;
   priority!: PriorityType;

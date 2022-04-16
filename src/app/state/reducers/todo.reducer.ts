@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import * as ToDoActions from '../actions/todo.action';
 import ToDo from '../todo.model';
 import ToDoState, { initializeState } from '../todo.state';
+import {SuccessEditToDoAction} from "../actions/todo.action";
 
 const initialState = initializeState();
 
@@ -20,7 +21,19 @@ const reducer = createReducer(
   }),
   // @ts-ignore
   on(ToDoActions.SuccessCreateToDoAction, (state: ToDoState, { payload }) => {
+    debugger
     return { ...state, ToDos: [...state.ToDos, payload], ToDoError: null };
+  }),
+  // @ts-ignore
+  on(ToDoActions.SuccessEditToDoAction, (state: ToDoState, { payload }) => {
+    const todoList: ToDo[] = state.ToDos.map(issue => {
+        if (issue.id === payload.id) {
+          return payload;
+        } else {
+          return issue;
+        }
+    });
+    return { ...state, ToDos: todoList, ToDoError: null };
   }),
   // @ts-ignore
   on(ToDoActions.ErrorToDoAction, (state: ToDoState, error: Error) => {

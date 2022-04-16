@@ -1,7 +1,7 @@
 //our root app component
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
-import { TabsComponent } from './tabs/app-tabs.component';
+import {TabsComponent} from './tabs/app-tabs.component';
 import {FormGroup} from "@angular/forms";
 import {FormlyFieldConfig} from "@ngx-formly/core";
 import {select, Store} from "@ngrx/store";
@@ -10,6 +10,7 @@ import {Observable, Subscription} from "rxjs";
 import ToDo, {PriorityType} from "./state/todo.model";
 import * as ToDoActions from "./state/actions/todo.action";
 import {map} from "rxjs/operators";
+import {BeginEditToDoAction} from "./state/actions/todo.action";
 
 @Component({
   selector: 'app',
@@ -17,20 +18,27 @@ import {map} from "rxjs/operators";
     <div class="container">
     <app-tabs>
       <my-tab [tabTitle]="'ToDo List'">
-        <h3>ToDo List</h3>
+        <mat-card>
+            <h3>Issues: {{ ToDoList.length }}</h3>
+        </mat-card>
+        <hr />
         <people-list
           [ToDoList]="ToDoList"
           (createIssue)="createNewIssue()"
-          (editPerson)="onEditPerson($event)">
+          (editIssue)="onEditIssue($event)">
         </people-list>
         <hr />
-        <button class="btn btn-default" (click)="onOpenAbout()"><i class="glyphicon glyphicon-question-sign"></i> About this</button>
+        <button mat-raised-button (click)="onOpenAbout()"><mat-icon>info</mat-icon> About this component</button>
       </my-tab>
     </app-tabs>
 
-    <ng-template let-person="person" #personEdit>
-      <person-edit [person]="person" (savePerson)="onPersonFormSubmit($event)"></person-edit>
+    <ng-template let-issue="person" #personEdit>
+      <person-edit [issue]="issue" (saveIssue)="onIssueFormSubmit($event)"></person-edit>
     </ng-template>
+
+      <ng-template #about>
+        <about></about>
+      </ng-template>
 
 
     <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
@@ -80,6 +88,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.ToDoSubscription = this.todo$
       .pipe(
         map(x => {
+          debugger
           this.ToDoList = x.ToDos || [];
           this.todoError = x.ToDoError;
         })
@@ -93,17 +102,17 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log(model);
   }
 
-  onEditPerson(person: any) {
+  onEditIssue(issue: ToDo) {
     this.tabsComponent.openTab(
-      `Editing ${person.name}`,
+      `Editing ${issue.title}`,
       this.editPersonTemplate,
-      person,
+      issue,
       true
     );
   }
 
-  onPersonFormSubmit(dataModel: any) {
-    if (dataModel.id > 0) {
+  public onIssueFormSubmit(dataModel: ToDo) {
+    debugger
       this.ToDoList = this.ToDoList.map(issue => {
         if (issue.id === dataModel.id) {
           return dataModel;
@@ -111,25 +120,28 @@ export class AppComponent implements OnInit, OnDestroy {
           return issue;
         }
       });
-    } else {
-      // create a new one
-      dataModel.id = Math.round(Math.random() * 100);
-      this.ToDoList.push(dataModel);
-    }
 
-    // close the tab
-    this.tabsComponent.closeActiveTab();
-  }
+      if (this.ToDoList.some((issues: ToDo) => issues.id === dataModel.id)) {
+        this.store.dispatch(ToDoActions.BeginEditToDoAction({payload: dataModel}));
+      }
+      else {
+        this.ToDoList.push(dataModel);
+        this.store.dispatch(ToDoActions.BeginCreateToDoAction({payload: dataModel}));
+      }
+
+      this.tabsComponent.closeActiveTab();
+    }
 
   onOpenAbout() {
     this.tabsComponent.openTab('About', this.aboutTemplate, {}, true);
   }
 
   createNewIssue() {
-    this.tabsComponent.openTab('Create New issue', this.editPersonTemplate, {}, true);
     debugger
-    const todo: ToDo = { title: this.Title, description: this.Description, priority: this.Priority, assignee: this.Assignee, isCompleted: this.IsCompleted };
-    this.store.dispatch(ToDoActions.BeginCreateToDoAction({ payload: todo }));
+    this.tabsComponent.openTab('Create New issue', this.editPersonTemplate, this.newEmptyIssue(), true);
+    debugger
+    // const todo: ToDo = { id: Math.round(Math.random() * 100), title: this.Title, description: this.Description, priority: this.Priority, assignee: this.Assignee, isCompleted: this.IsCompleted };
+    // this.store.dispatch(ToDoActions.BeginCreateToDoAction({ payload: todo }));
     this.setDefaultValues();
   }
 
@@ -139,6 +151,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.Description = '';
     this.Priority = PriorityType.Medium;
     this.Assignee = '';
+  }
+
+  private newEmptyIssue(): ToDo {
+    return { id: Math.round(Math.random() * 100), title: '', description: '', priority: PriorityType.Medium, assignee: '', isCompleted: false };
   }
 
   ngOnDestroy() {
