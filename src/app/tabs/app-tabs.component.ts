@@ -10,7 +10,7 @@ import {
 
 import { TabComponent } from './tab/app-tab.component';
 import { DynamicTabsDirective } from './dynamic-tabs.directive';
-import ToDo from "../state/todo.model";
+import Issue from "../state/issue.model";
 
 @Component({
   selector: 'app-tabs',
@@ -33,7 +33,7 @@ export class TabsComponent implements AfterContentInit {
     }
   }
 
-  public openTab(title: string, template: any, data: ToDo | null, isCloseable = false): void {
+  public openTab(title: string, template: any, data: Issue | null, isCloseable = false): void {
     const tabComponent: TabComponent | undefined = this.dynamicTabs.find((tab: TabComponent) => tab.title === 'About');
 
     if (tabComponent) {

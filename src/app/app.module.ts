@@ -16,8 +16,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
 import { StoreModule } from '@ngrx/store';
 
-import { ToDoEffects } from "./state/effects/todo.effects";
-import {ToDoReducer} from "./state/reducers/todo.reducer";
+import { IssueEffects } from "./state/effects/issue-effects.service";
+import {issueReducer} from "./state/reducers/issueReducer";
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import {MatIconModule} from "@angular/material/icon";
@@ -49,8 +49,8 @@ import {EmailSenderEffects} from "./state/effects/emailSender.effects";
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    StoreModule.forRoot({issueList: ToDoReducer, emailSender: emailSenderReducer}),
-    EffectsModule.forRoot([ToDoEffects, EmailSenderEffects]),
+    StoreModule.forRoot({issueList: issueReducer, emailSender: emailSenderReducer}),
+    EffectsModule.forRoot([IssueEffects, EmailSenderEffects]),
     FormlyModule.forRoot({ extras: { lazyRender: true } }),
     ReactiveFormsModule,
     FormlyModule.forRoot(),

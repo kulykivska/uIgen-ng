@@ -5,8 +5,8 @@ import {TabsComponent} from './tabs/app-tabs.component';
 import {select, Store} from "@ngrx/store";
 import issueState from "./state/issueState";
 import {Observable, Subscription} from "rxjs";
-import ToDo, {PriorityType} from "./state/todo.model";
-import * as ToDoActions from "./state/actions/todo.action";
+import Issue, {PriorityType} from "./state/issue.model";
+import * as ToDoActions from "./state/actions/issue.action";
 import * as EmailSenderActions from "./state/actions/emailSender.action";
 import {map} from "rxjs/operators";
 import {EmailSenderModel} from "./state/emailSender.model";
@@ -62,7 +62,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public emailSender$: Observable<EmailSenderState>;
   public issueListSubscription: Subscription | undefined;
   public emailSenderSubscription: Subscription | undefined;
-  public issueList: Array<ToDo> = [];
+  public issueList: Array<Issue> = [];
   public emailList: Array<EmailSenderModel> = [];
 
   public todoError: Error | null = null;
@@ -92,7 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
         })
       ).subscribe();
 
-    this.store.dispatch(ToDoActions.BeginGetToDoAction());
+    this.store.dispatch(ToDoActions.BeginGetIssueAction());
     this.store.dispatch(EmailSenderActions.GetEmailSenderAction());
   }
 
@@ -101,7 +101,7 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log(model);
   }
 
-  public onEditIssue(issue: ToDo): void {
+  public onEditIssue(issue: Issue): void {
     this.tabsComponent.openTab(
       `Editing ${issue.title}`,
       this.editPersonTemplate,
@@ -110,7 +110,7 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  public onIssueFormSubmit(dataModel: ToDo) {
+  public onIssueFormSubmit(dataModel: Issue) {
     this.issueList = this.issueList.map(issue => {
       if (issue.id === dataModel.id) {
         return dataModel;
@@ -119,11 +119,11 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 
-    if (this.issueList.some((issues: ToDo) => issues.id === dataModel.id)) {
-      this.store.dispatch(ToDoActions.BeginEditToDoAction({payload: dataModel}));
+    if (this.issueList.some((issues: Issue) => issues.id === dataModel.id)) {
+      this.store.dispatch(ToDoActions.BeginEditIssueAction({payload: dataModel}));
     } else {
       this.issueList.push(dataModel);
-      this.store.dispatch(ToDoActions.BeginCreateToDoAction({payload: dataModel}));
+      this.store.dispatch(ToDoActions.BeginCreateIssueAction({payload: dataModel}));
     }
 
     this.tabsComponent.closeActiveTab();
@@ -137,7 +137,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.tabsComponent.openTab('Create New issue', this.editPersonTemplate, AppComponent.newEmptyIssue(), true);
   }
 
-  private static newEmptyIssue(): ToDo {
+  private static newEmptyIssue(): Issue {
     return {
       id: Math.round(Math.random() * 100),
       title: '',

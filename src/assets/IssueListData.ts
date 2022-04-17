@@ -1,6 +1,6 @@
-import ToDo, {PriorityType} from "../app/state/todo.model";
+import Issue, {PriorityType} from "../app/state/issue.model";
 
-export const toDoListData: ToDo[] =  [
+export const issueListData: Issue[] =  [
   {
     id: 0,
     title: 'Tech task',

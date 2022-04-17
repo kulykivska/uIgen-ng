@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import ToDo from "../state/todo.model";
+import Issue from "../state/issue.model";
 import {select, Store} from "@ngrx/store";
 import issueState from "../state/issueState";
 
@@ -31,7 +31,7 @@ import issueState from "../state/issueState";
   `
 })
 export class PeopleListComponent {
-  @Input() issueList: Array<ToDo> = [];
+  @Input() issueList: Array<Issue> = [];
   @Output() createIssue = new EventEmitter<any>();
-  @Output() editIssue = new EventEmitter<ToDo>();
+  @Output() editIssue = new EventEmitter<Issue>();
 }

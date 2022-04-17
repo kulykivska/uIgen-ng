@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import ToDo from "../state/todo.model";
+import Issue from "../state/issue.model";
 
 @Component({
   selector: 'person-edit',
@@ -39,8 +39,8 @@ import ToDo from "../state/todo.model";
   `
 })
 export class PersonEditComponent implements OnInit {
-  @Input() issue!: ToDo;
-  @Output() saveIssue = new EventEmitter<ToDo>();
+  @Input() issue!: Issue;
+  @Output() saveIssue = new EventEmitter<Issue>();
 
   public issueForm: FormGroup;
 
@@ -69,7 +69,7 @@ export class PersonEditComponent implements OnInit {
   }
 
   onPersonFormSubmit() {
-    let dataModel: ToDo = this.issueForm.value;
+    let dataModel: Issue = this.issueForm.value;
     this.saveIssue.emit(dataModel);
   }
 }
