@@ -5,8 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {TabsComponent} from "./tabs/app-tabs.component";
 import {TabComponent} from "./tabs/tab/app-tab.component";
-import {IssueListComponent} from "./people/issue-list.component";
-import {IssueEditComponent} from "./people/issue-edit.component";
+import {IssueListComponent} from "./issues/issue-list.component";
+import {IssueEditComponent} from "./issues/issue-edit.component";
 import {DynamicTabsDirective} from "./tabs/dynamic-tabs.directive";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { EffectsModule } from '@ngrx/effects';
@@ -27,8 +27,9 @@ import {SendEmailComponent} from "./components/send-email/send-email.component";
 import {emailSenderReducer} from "./state/reducers/emailSender.reducer";
 import {EmailSenderEffects} from "./state/effects/emailSender.effects";
 import AppValues from "./common/app.values";
-import {FormlyFieldStepper} from "./people/formlyFieldStepper";
+import {FormlyFieldStepper} from "./components/forms/formlyFieldStepper";
 import {MatStepperModule} from "@angular/material/stepper";
+import {reducers} from "./state";
 
 
 @NgModule({
@@ -54,7 +55,7 @@ import {MatStepperModule} from "@angular/material/stepper";
     CdkAccordionModule,
     MatCardModule,
     MatIconModule,
-    StoreModule.forRoot({issueList: issueReducer, emailSender: emailSenderReducer}),
+    StoreModule.forRoot(reducers),
     EffectsModule.forRoot([IssueEffects, EmailSenderEffects]),
     ReactiveFormsModule,
     MatStepperModule,

@@ -34,7 +34,7 @@ export class TabsComponent implements AfterContentInit {
   }
 
   public openTab(title: string, template: any, data: Issue | null, isCloseable = false): void {
-    const tabComponent: TabComponent | undefined = this.dynamicTabs.find((tab: TabComponent) => tab.title === 'About');
+    const tabComponent: TabComponent | undefined = this.dynamicTabs.find((tab: TabComponent) => tab.title === title);
 
     if (tabComponent) {
       this.selectTab(tabComponent);
