@@ -20,11 +20,11 @@ import EmailSenderState from "./state/emailSender.state";
         <my-tab [tabTitle]="'ToDo List'">
           <mat-card>
             <h3>{{ issueList.length }} Issues: </h3>
-            <people-list
+            <issue-list
               [issueList]="issueList"
               (createIssue)="createNewIssue()"
               (editIssue)="onEditIssue($event)">
-            </people-list>
+            </issue-list>
           </mat-card>
           <hr/>
           <mat-card>
@@ -99,8 +99,6 @@ export class AppComponent implements OnInit, OnDestroy {
   public emailSenderError: Error | null = null;
   public emailSenderSuccess: EmailFormSuccessModel | null = null;
 
-  public expandedIndex = 0;
-
   constructor(private storeIssue: Store<{ issueList: issueState }>,
               private storeEmailSender: Store<{ emailSender: EmailSenderState }>) {
     this.issueList$ = storeIssue.pipe(select('issueList'));
@@ -144,7 +142,7 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  public onIssueFormSubmit(dataModel: Issue) {
+  public onIssueFormSubmit(dataModel: Issue): void {
     this.issueList = this.issueList.map(issue => {
       if (issue.id === dataModel.id) {
         return dataModel;

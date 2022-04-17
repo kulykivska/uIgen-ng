@@ -23,7 +23,6 @@ export class SendEmailComponent {
   @Input() emailSenderSuccess?: EmailFormSuccessModel | null;
   @Output() sendEmail = new EventEmitter<EmailSenderModel>();
 
-  public emailFormSuccess: { name: string; message: string; } = {name: '', message: ''};
   public emailModel: EmailSenderModel = {email: '', name: ''};
   public form = new FormGroup({});
   public options: FormlyFormOptions = {};

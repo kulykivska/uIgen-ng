@@ -1,10 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import Issue from "../state/issue.model";
-import {select, Store} from "@ngrx/store";
-import issueState from "../state/issueState";
 
 @Component({
-  selector: 'people-list',
+  selector: 'issue-list',
   template: `
     <table class="table table-striped todoList--table">
       <thead>
@@ -23,14 +21,14 @@ import issueState from "../state/issueState";
           <td><a href="https://twitter.com/{{ todo.assignee }}" target="_blank">{{ todo.assignee }}</a></td>
           <td><ng-template [ngIf]="todo.isCompleted"><mat-icon>check</mat-icon></ng-template></td>
 
-          <td><button mat-raised-button color="primary" (click)="editIssue.emit(todo)">Edit</button></td>
+          <td><button mat-raised-button color="primary" (click)="editIssue.emit(todo)" id="editIssueButton">Edit</button></td>
         </tr>
       </tbody>
     </table>
-    <button mat-raised-button color="primary" (click)="createIssue.emit()">Create issue</button>
+    <button mat-raised-button color="primary" (click)="createIssue.emit()" id="createIssueButton">Create issue</button>
   `
 })
-export class PeopleListComponent {
+export class IssueListComponent {
   @Input() issueList: Array<Issue> = [];
   @Output() createIssue = new EventEmitter<any>();
   @Output() editIssue = new EventEmitter<Issue>();
