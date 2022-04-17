@@ -1,6 +1,6 @@
 import ToDo from './todo.model';
 
-export default class ToDoState {
+export default class issueState {
   ToDos!: Array<ToDo>;
   ToDoError!: Error | null;
 }

@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ToDoActions from '../actions/todo.action';
 import ToDo from '../todo.model';
-import ToDoState, { initializeState } from '../todo.state';
+import issueState, { initializeState } from '../issueState';
 
 const initialState = initializeState();
 
@@ -9,22 +9,22 @@ const reducer = createReducer(
   initialState,
   on(ToDoActions.GetToDoAction, state => state),
   // @ts-ignore
-  on(ToDoActions.CreateToDoAction, (state: ToDoState, todo: ToDo) => {
+  on(ToDoActions.CreateToDoAction, (state: issueState, todo: ToDo) => {
     // @ts-ignore
     return { ...state, ToDos: [...state.ToDos, todo], ToDoError: null };
   }),
 
   // @ts-ignore
-  on(ToDoActions.SuccessGetToDoAction, (state: ToDoState, { payload }) => {
+  on(ToDoActions.SuccessGetToDoAction, (state: issueState, { payload }) => {
     return { ...state, ToDos: payload, ToDoError: null };
   }),
   // @ts-ignore
-  on(ToDoActions.SuccessCreateToDoAction, (state: ToDoState, { payload }) => {
+  on(ToDoActions.SuccessCreateToDoAction, (state: issueState, { payload }) => {
     debugger
     return { ...state, ToDos: [...state.ToDos, payload], ToDoError: null };
   }),
   // @ts-ignore
-  on(ToDoActions.SuccessEditToDoAction, (state: ToDoState, { payload }) => {
+  on(ToDoActions.SuccessEditToDoAction, (state: issueState, { payload }) => {
     const todoList: ToDo[] = state.ToDos.map(issue => {
         if (issue.id === payload.id) {
           return payload;
@@ -35,7 +35,7 @@ const reducer = createReducer(
     return { ...state, ToDos: todoList, ToDoError: null };
   }),
   // @ts-ignore
-  on(ToDoActions.ErrorToDoAction, (state: ToDoState, error: Error) => {
+  on(ToDoActions.ErrorToDoAction, (state: issueState, error: Error) => {
     // remove below line and use different telemetry logging
     console.error(error);
     return { ...state, ToDoError: error };
@@ -43,9 +43,9 @@ const reducer = createReducer(
 );
 
 export function ToDoReducer(
-  state: ToDoState | undefined,
+  state: issueState | undefined,
   action: Action
-): ToDoState {
+): issueState {
   debugger
   // @ts-ignore
   return reducer(state, action);

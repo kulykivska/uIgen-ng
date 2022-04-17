@@ -9,7 +9,7 @@ import {EmailSenderHttpService} from "../httpservices/emailSender.httpservice";
 
 
 @Injectable()
-export class ToDoEffects {
+export class EmailSenderEffects {
   constructor(private emailSenderService: EmailSenderHttpService, private action$: Actions) {}
 
   GetEmails$: Observable<Action> = createEffect(() =>

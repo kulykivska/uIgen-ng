@@ -17,7 +17,6 @@ import {MatCardModule} from "@angular/material/card";
 import { StoreModule } from '@ngrx/store';
 
 import { ToDoEffects } from "./state/effects/todo.effects";
-import {ToDoComponent} from "./components/to-do.component";
 import {ToDoReducer} from "./state/reducers/todo.reducer";
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
@@ -25,13 +24,14 @@ import {MatIconModule} from "@angular/material/icon";
 import {AboutComponent} from "./components/about/about.component";
 import {SendEmailComponent} from "./components/send-email/send-email.component";
 import {emailSenderReducer} from "./state/reducers/emailSender.reducer";
+import {EmailSenderEffects} from "./state/effects/emailSender.effects";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     AboutComponent,
-    ToDoComponent,
+    // ToDoComponent,
     TabsComponent,
     TabComponent,
     DynamicTabsDirective,
@@ -49,8 +49,8 @@ import {emailSenderReducer} from "./state/reducers/emailSender.reducer";
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    StoreModule.forRoot({todos: ToDoReducer, emailForm: emailSenderReducer}),
-    EffectsModule.forRoot([ToDoEffects]),
+    StoreModule.forRoot({issueList: ToDoReducer, emailSender: emailSenderReducer}),
+    EffectsModule.forRoot([ToDoEffects, EmailSenderEffects]),
     FormlyModule.forRoot({ extras: { lazyRender: true } }),
     ReactiveFormsModule,
     FormlyModule.forRoot(),

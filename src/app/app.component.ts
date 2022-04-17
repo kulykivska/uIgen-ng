@@ -3,12 +3,14 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 
 import {TabsComponent} from './tabs/app-tabs.component';
 import {select, Store} from "@ngrx/store";
-import ToDoState from "./state/todo.state";
+import issueState from "./state/issueState";
 import {Observable, Subscription} from "rxjs";
 import ToDo, {PriorityType} from "./state/todo.model";
 import * as ToDoActions from "./state/actions/todo.action";
+import * as EmailSenderActions from "./state/actions/emailSender.action";
 import {map} from "rxjs/operators";
 import {EmailSenderModel} from "./state/emailSender.model";
+import EmailSenderState from "./state/emailSender.state";
 
 @Component({
   selector: 'app',
@@ -17,9 +19,9 @@ import {EmailSenderModel} from "./state/emailSender.model";
       <app-tabs>
         <my-tab [tabTitle]="'ToDo List'">
           <mat-card>
-            <h3>{{ ToDoList.length }} Issues: </h3>
+            <h3>{{ issueList.length }} Issues: </h3>
             <people-list
-              [ToDoList]="ToDoList"
+              [issueList]="issueList"
               (createIssue)="createNewIssue()"
               (editIssue)="onEditIssue($event)">
             </people-list>
@@ -28,6 +30,10 @@ import {EmailSenderModel} from "./state/emailSender.model";
           <mat-card>
             <h3>Want to send ToDo List on email:</h3>
             <send-email (sendEmail)="onSendEmail($event)"></send-email>
+            <div *ngFor="let emailInfo of emailList">
+              <p>{{emailInfo.email}}</p>
+              <p>{{emailInfo.name}}</p>
+            </div>
           </mat-card>
           <hr/>
           <button mat-raised-button (click)="onOpenAbout()">
@@ -52,31 +58,46 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('about') aboutTemplate: ElementRef | undefined;
   @ViewChild(TabsComponent) tabsComponent!: TabsComponent;
 
-  public todo$: Observable<ToDoState>;
-  public ToDoSubscription: Subscription | undefined;
-  public ToDoList: Array<ToDo> = [];
+  public issueList$: Observable<issueState>;
+  public emailSender$: Observable<EmailSenderState>;
+  public issueListSubscription: Subscription | undefined;
+  public emailSenderSubscription: Subscription | undefined;
+  public issueList: Array<ToDo> = [];
+  public emailList: Array<EmailSenderModel> = [];
 
-  todoError: Error | null = null;
+  public todoError: Error | null = null;
+  public emailSenderError: Error | null = null;
 
-  constructor(private store: Store<{ todos: ToDoState }>) {
-    this.todo$ = store.pipe(select('todos'));
+  constructor(private store: Store<{ issueList: issueState, emailSender: EmailSenderState }>) {
+    this.issueList$ = store.pipe(select('issueList'));
+    this.emailSender$ = store.pipe(select('emailSender'));
   }
 
   public ngOnInit(): void {
-    this.ToDoSubscription = this.todo$
+    this.issueListSubscription = this.issueList$
       .pipe(
         map(x => {
           debugger
-          this.ToDoList = x.ToDos || [];
+          this.issueList = x.ToDos || [];
           this.todoError = x.ToDoError;
         })
       )
       .subscribe();
 
+    this.emailSenderSubscription = this.emailSender$
+      .pipe(
+        map((emailInfo: EmailSenderState) => {
+          this.emailList = emailInfo.emailInforms || [];
+          this.emailSenderError = emailInfo.emailInformError;
+        })
+      ).subscribe();
+
     this.store.dispatch(ToDoActions.BeginGetToDoAction());
+    this.store.dispatch(EmailSenderActions.GetEmailSenderAction());
   }
 
   public onSendEmail(model: EmailSenderModel): void {
+    debugger
     console.log(model);
   }
 
@@ -90,7 +111,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public onIssueFormSubmit(dataModel: ToDo) {
-    this.ToDoList = this.ToDoList.map(issue => {
+    this.issueList = this.issueList.map(issue => {
       if (issue.id === dataModel.id) {
         return dataModel;
       } else {
@@ -98,10 +119,10 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 
-    if (this.ToDoList.some((issues: ToDo) => issues.id === dataModel.id)) {
+    if (this.issueList.some((issues: ToDo) => issues.id === dataModel.id)) {
       this.store.dispatch(ToDoActions.BeginEditToDoAction({payload: dataModel}));
     } else {
-      this.ToDoList.push(dataModel);
+      this.issueList.push(dataModel);
       this.store.dispatch(ToDoActions.BeginCreateToDoAction({payload: dataModel}));
     }
 
@@ -128,8 +149,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (this.ToDoSubscription) {
-      this.ToDoSubscription.unsubscribe();
+    if (this.issueListSubscription) {
+      this.issueListSubscription.unsubscribe();
+    }
+    if (this.emailSenderSubscription) {
+      this.emailSenderSubscription.unsubscribe();
     }
   }
 }

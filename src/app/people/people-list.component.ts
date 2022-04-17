@@ -1,5 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import ToDo from "../state/todo.model";
+import {select, Store} from "@ngrx/store";
+import issueState from "../state/issueState";
 
 @Component({
   selector: 'people-list',
@@ -14,7 +16,7 @@ import ToDo from "../state/todo.model";
         <th></th>
       </thead>
       <tbody>
-        <tr *ngFor="let todo of ToDoList">
+        <tr *ngFor="let todo of issueList">
           <td>{{ todo.title }}</td>
           <td>{{ todo.description }}</td>
           <td>{{ todo.priority }}</td>
@@ -29,7 +31,7 @@ import ToDo from "../state/todo.model";
   `
 })
 export class PeopleListComponent {
-  @Input() ToDoList: Array<ToDo> = [];
+  @Input() issueList: Array<ToDo> = [];
   @Output() createIssue = new EventEmitter<any>();
   @Output() editIssue = new EventEmitter<ToDo>();
 }
