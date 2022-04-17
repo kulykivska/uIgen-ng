@@ -14,7 +14,8 @@ import Issue from "../state/issue.model";
 
 @Component({
   selector: 'app-tabs',
-  templateUrl: './app-tabs.component.html'
+  templateUrl: './app-tabs.component.html',
+  styleUrls: ['app-tabs.component.sass']
 })
 export class TabsComponent implements AfterContentInit {
   public dynamicTabs: TabComponent[] = [];

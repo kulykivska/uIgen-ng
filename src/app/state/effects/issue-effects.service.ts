@@ -34,9 +34,8 @@ export class IssueEffects {
             return of(IssueActions.SuccessCreateIssueAction({payload: action.payload}))
           }
           // Here should be request
-
-          // this.todoService.createToDos(action.payload).pipe(
-          //   map((data: ToDo) => {
+          // this.todoService.createNewIssue(action.payload).pipe(
+          //   map((data: Issue) => {
           //     return ToDoActions.SuccessCreateToDoAction({payload: data});
           //   }),
           //   catchError((error: Error) => {
