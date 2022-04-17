@@ -26,6 +26,9 @@ import {AboutComponent} from "./components/about/about.component";
 import {SendEmailComponent} from "./components/send-email/send-email.component";
 import {emailSenderReducer} from "./state/reducers/emailSender.reducer";
 import {EmailSenderEffects} from "./state/effects/emailSender.effects";
+import AppValues from "./common/app.values";
+import {FormlyFieldStepper} from "./people/formlyFieldStepper";
+import {MatStepperModule} from "@angular/material/stepper";
 
 
 @NgModule({
@@ -37,7 +40,8 @@ import {EmailSenderEffects} from "./state/effects/emailSender.effects";
     DynamicTabsDirective,
     IssueListComponent,
     IssueEditComponent,
-    SendEmailComponent
+    SendEmailComponent,
+    FormlyFieldStepper
   ],
   imports: [
     BrowserModule,
@@ -52,9 +56,17 @@ import {EmailSenderEffects} from "./state/effects/emailSender.effects";
     MatIconModule,
     StoreModule.forRoot({issueList: issueReducer, emailSender: emailSenderReducer}),
     EffectsModule.forRoot([IssueEffects, EmailSenderEffects]),
-    FormlyModule.forRoot({ extras: { lazyRender: true } }),
     ReactiveFormsModule,
-    FormlyModule.forRoot(),
+    MatStepperModule,
+    FormlyModule.forRoot({
+      extras: { lazyRender: true },
+      validators: [
+        { name: 'fieldMatch', validation: AppValues.fieldMatchValidator },
+      ],
+      types: [
+        { name: 'stepper', component: FormlyFieldStepper, wrappers: [] },
+      ],
+    }),
     FormlyBootstrapModule,
   ],
   providers: [],
