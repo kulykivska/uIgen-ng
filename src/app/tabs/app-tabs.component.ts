@@ -34,23 +34,29 @@ export class TabsComponent implements AfterContentInit {
   }
 
   public openTab(title: string, template: any, data: ToDo | null, isCloseable = false): void {
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
-      TabComponent
-    );
+    const tabComponent: TabComponent | undefined = this.dynamicTabs.find((tab: TabComponent) => tab.title === 'About');
 
-    const viewContainerRef: ViewContainerRef = this.dynamicTabPlaceholder.viewContainer;
+    if (tabComponent) {
+      this.selectTab(tabComponent);
+    } else {
+      const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+        TabComponent
+      );
 
-    const componentRef: ComponentRef<TabComponent> = viewContainerRef.createComponent(componentFactory);
+      const viewContainerRef: ViewContainerRef = this.dynamicTabPlaceholder.viewContainer;
 
-    const instance: TabComponent = componentRef.instance as TabComponent;
-    instance.title = title;
-    instance.template = template;
-    instance.dataContext = data;
-    instance.isCloseable = isCloseable;
+      const componentRef: ComponentRef<TabComponent> = viewContainerRef.createComponent(componentFactory);
 
-    this.dynamicTabs.push(componentRef.instance as TabComponent);
+      const instance: TabComponent = componentRef.instance as TabComponent;
+      instance.title = title;
+      instance.template = template;
+      instance.dataContext = data;
+      instance.isCloseable = isCloseable;
 
-    this.selectTab(this.dynamicTabs[this.dynamicTabs.length - 1]);
+      this.dynamicTabs.push(componentRef.instance as TabComponent);
+
+      this.selectTab(this.dynamicTabs[this.dynamicTabs.length - 1]);
+    }
   }
 
   public selectTab(tab: TabComponent): void {

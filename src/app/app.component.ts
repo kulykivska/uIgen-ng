@@ -69,23 +69,16 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   ];
 
-  todo$: Observable<ToDoState>;
-  ToDoSubscription: Subscription | undefined;
-  ToDoList: Array<ToDo> = [];
-
-  Title: string = '';
-  Description: string = '';
-  Priority: PriorityType = PriorityType.Medium;
-  IsCompleted: boolean = false;
-  Assignee: string = '';
-
+  public todo$: Observable<ToDoState>;
+  public ToDoSubscription: Subscription | undefined;
+  public ToDoList: Array<ToDo> = [];
 
   todoError: Error | null = null;
 
   constructor(private store: Store<{ todos: ToDoState }>) {
     this.todo$ = store.pipe(select('todos'));
   }
-  ngOnInit() {
+  public ngOnInit(): void {
     this.ToDoSubscription = this.todo$
       .pipe(
         map(x => {
@@ -103,7 +96,7 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log(model);
   }
 
-  onEditIssue(issue: ToDo) {
+  public onEditIssue(issue: ToDo): void {
     this.tabsComponent.openTab(
       `Editing ${issue.title}`,
       this.editPersonTemplate,
@@ -113,7 +106,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public onIssueFormSubmit(dataModel: ToDo) {
-    debugger
       this.ToDoList = this.ToDoList.map(issue => {
         if (issue.id === dataModel.id) {
           return dataModel;
@@ -133,38 +125,19 @@ export class AppComponent implements OnInit, OnDestroy {
       this.tabsComponent.closeActiveTab();
     }
 
-  onOpenAbout() {
-    const tabComponent: TabComponent | undefined = this.tabsComponent.dynamicTabs.find((tab: TabComponent) => tab.title === 'About');
-
-    if (tabComponent) {
-      this.tabsComponent.selectTab(tabComponent);
-    } else {
-      this.tabsComponent.openTab('About', this.aboutTemplate, null, true);
-    }
+  public onOpenAbout(): void {
+    this.tabsComponent.openTab('About', this.aboutTemplate, null, true);
   }
 
-  createNewIssue() {
-    debugger
-    this.tabsComponent.openTab('Create New issue', this.editPersonTemplate, this.newEmptyIssue(), true);
-    debugger
-    // const todo: ToDo = { id: Math.round(Math.random() * 100), title: this.Title, description: this.Description, priority: this.Priority, assignee: this.Assignee, isCompleted: this.IsCompleted };
-    // this.store.dispatch(ToDoActions.BeginCreateToDoAction({ payload: todo }));
-    this.setDefaultValues();
+  public createNewIssue(): void {
+    this.tabsComponent.openTab('Create New issue', this.editPersonTemplate, AppComponent.newEmptyIssue(), true);
   }
 
-  setDefaultValues(): void {
-    this.Title = '';
-    this.IsCompleted = false;
-    this.Description = '';
-    this.Priority = PriorityType.Medium;
-    this.Assignee = '';
-  }
-
-  private newEmptyIssue(): ToDo {
+  private static newEmptyIssue(): ToDo {
     return { id: Math.round(Math.random() * 100), title: '', description: '', priority: PriorityType.Medium, assignee: '', isCompleted: false };
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy(): void {
     if (this.ToDoSubscription) {
       this.ToDoSubscription.unsubscribe();
     }
