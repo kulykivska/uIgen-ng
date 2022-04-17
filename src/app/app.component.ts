@@ -68,9 +68,10 @@ export class AppComponent implements OnInit, OnDestroy {
   public todoError: Error | null = null;
   public emailSenderError: Error | null = null;
 
-  constructor(private store: Store<{ issueList: issueState, emailSender: EmailSenderState }>) {
-    this.issueList$ = store.pipe(select('issueList'));
-    this.emailSender$ = store.pipe(select('emailSender'));
+  constructor(private storeIssue: Store<{ issueList: issueState}>,
+    private storeEmailSender: Store<{ emailSender: EmailSenderState }>) {
+    this.issueList$ = storeIssue.pipe(select('issueList'));
+    this.emailSender$ = storeEmailSender.pipe(select('emailSender'));
   }
 
   public ngOnInit(): void {
@@ -87,13 +88,14 @@ export class AppComponent implements OnInit, OnDestroy {
     this.emailSenderSubscription = this.emailSender$
       .pipe(
         map((emailInfo: EmailSenderState) => {
+          debugger
           this.emailList = emailInfo.emailInforms || [];
           this.emailSenderError = emailInfo.emailInformError;
         })
       ).subscribe();
 
-    this.store.dispatch(ToDoActions.BeginGetIssueAction());
-    this.store.dispatch(EmailSenderActions.GetEmailSenderAction());
+    this.storeIssue.dispatch(ToDoActions.BeginGetIssueAction());
+    this.storeEmailSender.dispatch(EmailSenderActions.GetEmailSenderAction());
   }
 
   public onSendEmail(model: EmailSenderModel): void {
@@ -120,10 +122,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     if (this.issueList.some((issues: Issue) => issues.id === dataModel.id)) {
-      this.store.dispatch(ToDoActions.BeginEditIssueAction({payload: dataModel}));
+      this.storeIssue.dispatch(ToDoActions.BeginEditIssueAction({payload: dataModel}));
     } else {
       this.issueList.push(dataModel);
-      this.store.dispatch(ToDoActions.BeginCreateIssueAction({payload: dataModel}));
+      this.storeIssue.dispatch(ToDoActions.BeginCreateIssueAction({payload: dataModel}));
     }
 
     this.tabsComponent.closeActiveTab();

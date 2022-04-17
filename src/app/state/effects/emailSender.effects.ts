@@ -18,6 +18,7 @@ export class EmailSenderEffects {
       mergeMap(action =>
         this.emailSenderService.getEmails().pipe(
           map((data: EmailSenderModel[]) => {
+            debugger
             return EmailSenderActions.SuccessGetEmailSenderAction({ payload: data });
           }),
           catchError((error: Error) => {

@@ -3,10 +3,10 @@ import * as IssueActions from '../actions/issue.action';
 import Issue from '../issue.model';
 import issueState, { initializeState } from '../issueState';
 
-const initialState = initializeState();
+const initialIssueState = initializeState();
 
-const reducer = createReducer(
-  initialState,
+const reducerIssue = createReducer(
+  initialIssueState,
   on(IssueActions.GetIssueAction, state => state),
   // @ts-ignore
   on(IssueActions.CreateIssueAction, (state: issueState, todo: Issue) => {
@@ -48,5 +48,5 @@ export function issueReducer(
 ): issueState {
   debugger
   // @ts-ignore
-  return reducer(state, action);
+  return reducerIssue(state, action);
 }

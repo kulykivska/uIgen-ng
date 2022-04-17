@@ -1,22 +1,22 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as EmailSenderActions from '../actions/emailSender.action';
-import { initializeState } from '../emailSender.state';
+import { initializeEmailState } from '../emailSender.state';
 import EmailSenderState from "../emailSender.state";
 import {EmailSenderModel} from "../emailSender.model";
 
-const initialState = initializeState();
+const initialEmailState = initializeEmailState();
 
-const reducer = createReducer(
-  initialState,
+const reducerEmailSender = createReducer(
+  initialEmailState,
   on(EmailSenderActions.GetEmailSenderAction, state => state),
   // @ts-ignore
   on(EmailSenderActions.SuccessGetEmailSenderAction, (state: EmailSenderState, { payload }) => {
-    return { ...state, ToDos: payload, ToDoError: null };
+    return { ...state, emailInforms: payload, emailInformError: null };
   }),
   // @ts-ignore
   on(EmailSenderActions.CreateEmailSenderAction, (state: EmailSenderState, todo: EmailSenderModel) => {
     // @ts-ignore
-    return { ...state, ToDos: [...state.emailInforms, todo], ToDoError: null, emailInformSuccess: null};
+    return { ...state, emailInforms: [...state.emailInforms, todo], emailInformError: null, emailInformSuccess: null};
   }),
   // @ts-ignore
   on(EmailSenderActions.SuccessEmailSenderAction, (state: EmailSenderState, { payload }) => {
@@ -36,5 +36,5 @@ export function emailSenderReducer(
   action: Action
 ): EmailSenderState {
   // @ts-ignore
-  return reducer(state, action);
+  return reducerEmailSender(state, action);
 }

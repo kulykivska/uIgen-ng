@@ -11,6 +11,7 @@ export class EmailSenderHttpService {
   constructor(private httpclient: HttpClient) {}
 
   public getEmails(): Observable<EmailSenderModel[]> {
+    debugger
     return of(emailListData);
   }
 
