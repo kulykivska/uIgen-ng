@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import {TabsComponent} from "./tabs/app-tabs.component";
 import {TabComponent} from "./tabs/tab/app-tab.component";
 import {IssueListComponent} from "./people/issue-list.component";
-import {PersonEditComponent} from "./people/person-edit.component";
+import {IssueEditComponent} from "./people/issue-edit.component";
 import {DynamicTabsDirective} from "./tabs/dynamic-tabs.directive";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { EffectsModule } from '@ngrx/effects';
@@ -36,7 +36,7 @@ import {EmailSenderEffects} from "./state/effects/emailSender.effects";
     TabComponent,
     DynamicTabsDirective,
     IssueListComponent,
-    PersonEditComponent,
+    IssueEditComponent,
     SendEmailComponent
   ],
   imports: [
@@ -55,7 +55,7 @@ import {EmailSenderEffects} from "./state/effects/emailSender.effects";
     FormlyModule.forRoot({ extras: { lazyRender: true } }),
     ReactiveFormsModule,
     FormlyModule.forRoot(),
-    FormlyBootstrapModule
+    FormlyBootstrapModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

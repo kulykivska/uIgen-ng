@@ -4,7 +4,7 @@ import Issue, {PriorityType} from "../state/issue.model";
 import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 
 @Component({
-  selector: 'person-edit',
+  selector: 'issue-edit',
   template: `
     <form [formGroup]="form" (ngSubmit)="onPersonFormSubmit(issueModel)">
       <formly-form [form]="form" [fields]="fields" [model]="issueModel" [options]="options"></formly-form>
@@ -12,7 +12,7 @@ import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
     </form>
   `
 })
-export class PersonEditComponent implements OnInit {
+export class IssueEditComponent implements OnInit {
   @Input() issue!: Issue;
   @Output() saveIssue = new EventEmitter<Issue>();
 
@@ -67,7 +67,7 @@ export class PersonEditComponent implements OnInit {
         placeholder: 'Assignee',
         required: true,
         addonLeft: {
-          class: 'fa-solid fa-at',
+          class: 'input-group-text__icon fa fa-at',
         },
         label: 'Assignee',
       },
@@ -75,7 +75,7 @@ export class PersonEditComponent implements OnInit {
     {
       key: 'isCompleted',
       type: 'checkbox',
-      className: 'mt-2 d-block',
+      className: 'mt-4 d-block',
       templateOptions: {
         label: 'Completed?',
       },

@@ -1,4 +1,3 @@
-//our root app component
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import {TabsComponent} from './tabs/app-tabs.component';
@@ -74,7 +73,7 @@ import EmailSenderState from "./state/emailSender.state";
       </app-tabs>
 
       <ng-template let-issue="person" #personEdit>
-        <person-edit [issue]="issue" (saveIssue)="onIssueFormSubmit($event)"></person-edit>
+        <issue-edit [issue]="issue" (saveIssue)="onIssueFormSubmit($event)"></issue-edit>
       </ng-template>
 
       <ng-template #about>
