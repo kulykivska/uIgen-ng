@@ -45,7 +45,6 @@ export class PersonEditComponent implements OnInit {
   public issueForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
-    debugger
     this.issueForm = this.fb.group({
       id: '',
       title: '',

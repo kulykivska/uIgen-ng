@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {EmailValidator, FormGroup} from "@angular/forms";
 import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import AppValues from "../../common/app.values";
-import {EmailSenderModel} from "../../state/emailSender.model";
+import {EmailFormSuccessModel, EmailSenderModel} from "../../state/emailSender.model";
 
 @Component({
   selector: 'send-email',
@@ -12,14 +12,15 @@ import {EmailSenderModel} from "../../state/emailSender.model";
       <button mat-raised-button color="primary" class="mt-3" type="submit">Submit</button>
     </form>
 
-    <div *ngIf="emailFormSuccess?.message" class="mt-3">
-      <div class="alert alert-success" role="alert" id="emailFormSuccessMessage">
-        {{emailFormSuccess?.message}}
+    <div *ngIf="emailSenderSuccess?.message" class="mt-3">
+      <div class="alert alert-success alert-dismissible fade show" role="alert" id="emailFormSuccessMessage">
+        {{emailSenderSuccess?.message}}
       </div>
     </div>
   `
 })
 export class SendEmailComponent {
+  @Input() emailSenderSuccess?: EmailFormSuccessModel | null;
   @Output() sendEmail = new EventEmitter<EmailSenderModel>();
 
   public emailFormSuccess: { name: string; message: string; } = {name: '', message: ''};
@@ -56,13 +57,11 @@ export class SendEmailComponent {
     }
   ];
 
-  constructor() { }
+  constructor() {}
 
   public onSubmit(model: EmailSenderModel): void {
     if (this.form.valid) {
       this.sendEmail.emit(model);
-
-      this.emailFormSuccess = {name: 'Success', message: 'Your request has been sent.'}
     }
   }
 }

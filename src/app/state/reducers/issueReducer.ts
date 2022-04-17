@@ -20,7 +20,6 @@ const reducerIssue = createReducer(
   }),
   // @ts-ignore
   on(IssueActions.SuccessCreateIssueAction, (state: issueState, { payload }) => {
-    debugger
     return { ...state, ToDos: [...state.ToDos, payload], ToDoError: null };
   }),
   // @ts-ignore
@@ -46,7 +45,6 @@ export function issueReducer(
   state: issueState | undefined,
   action: Action
 ): issueState {
-  debugger
   // @ts-ignore
   return reducerIssue(state, action);
 }

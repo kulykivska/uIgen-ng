@@ -14,14 +14,14 @@ const reducerEmailSender = createReducer(
     return { ...state, emailInforms: payload, emailInformError: null };
   }),
   // @ts-ignore
-  on(EmailSenderActions.CreateEmailSenderAction, (state: EmailSenderState, todo: EmailSenderModel) => {
+  on(EmailSenderActions.CreateEmailSenderAction, (state: EmailSenderState, { payload }) => {
     // @ts-ignore
-    return { ...state, emailInforms: [...state.emailInforms, todo], emailInformError: null, emailInformSuccess: null};
+    const emailInformList: EmailSenderModel[] = state.emailInforms.concat(payload);
+    return { ...state, emailInforms: emailInformList, emailInformError: null, emailInformSuccess: null};
   }),
   // @ts-ignore
   on(EmailSenderActions.SuccessEmailSenderAction, (state: EmailSenderState, { payload }) => {
-    debugger
-    return { ...state, emailInforms: [...state.emailInforms, payload], emailInformError: null, emailInformSuccess: {name: 'Success', message: 'Was created!'}};
+    return { ...state, emailInformError: null, emailInformSuccess: {name: 'Success', message: 'Your request has been sent.'}};
   }),
   // @ts-ignore
   on(EmailSenderActions.ErrorEmailSenderAction, (state: EmailSenderState, error: Error) => {

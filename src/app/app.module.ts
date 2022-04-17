@@ -13,6 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
+import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {MatCardModule} from "@angular/material/card";
 import { StoreModule } from '@ngrx/store';
 
@@ -31,7 +32,6 @@ import {EmailSenderEffects} from "./state/effects/emailSender.effects";
   declarations: [
     AppComponent,
     AboutComponent,
-    // ToDoComponent,
     TabsComponent,
     TabComponent,
     DynamicTabsDirective,
@@ -47,6 +47,7 @@ import {EmailSenderEffects} from "./state/effects/emailSender.effects";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    CdkAccordionModule,
     MatCardModule,
     MatIconModule,
     StoreModule.forRoot({issueList: issueReducer, emailSender: emailSenderReducer}),

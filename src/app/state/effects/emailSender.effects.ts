@@ -18,7 +18,6 @@ export class EmailSenderEffects {
       mergeMap(action =>
         this.emailSenderService.getEmails().pipe(
           map((data: EmailSenderModel[]) => {
-            debugger
             return EmailSenderActions.SuccessGetEmailSenderAction({ payload: data });
           }),
           catchError((error: Error) => {
@@ -33,7 +32,6 @@ export class EmailSenderEffects {
       return this.action$.pipe(
         ofType(EmailSenderActions.CreateEmailSenderAction),
         mergeMap(action => {
-            debugger
             return of(EmailSenderActions.SuccessEmailSenderAction({payload: action.payload}))
 
           // Here should be request

@@ -31,7 +31,6 @@ export class IssueEffects {
       return this.action$.pipe(
         ofType(IssueActions.BeginCreateIssueAction),
         mergeMap(action => {
-          debugger
             return of(IssueActions.SuccessCreateIssueAction({payload: action.payload}))
           }
           // Here should be request

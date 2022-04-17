@@ -9,7 +9,7 @@ import Issue, {PriorityType} from "./state/issue.model";
 import * as ToDoActions from "./state/actions/issue.action";
 import * as EmailSenderActions from "./state/actions/emailSender.action";
 import {map} from "rxjs/operators";
-import {EmailSenderModel} from "./state/emailSender.model";
+import {EmailFormSuccessModel, EmailSenderModel} from "./state/emailSender.model";
 import EmailSenderState from "./state/emailSender.state";
 
 @Component({
@@ -29,11 +29,41 @@ import EmailSenderState from "./state/emailSender.state";
           <hr/>
           <mat-card>
             <h3>Want to send ToDo List on email:</h3>
-            <send-email (sendEmail)="onSendEmail($event)"></send-email>
-            <div *ngFor="let emailInfo of emailList">
-              <p>{{emailInfo.email}}</p>
-              <p>{{emailInfo.name}}</p>
+
+            <div class="row">
+              <div class="col-9">
+              <send-email (sendEmail)="onSendEmail($event)" [emailSenderSuccess]="emailSenderSuccess"></send-email>
             </div>
+
+            <cdk-accordion class="col-3">
+              <cdk-accordion-item
+                #accordionItem="cdkAccordionItem"
+                class="example-accordion-item"
+                role="button"
+                tabindex="0"
+                [attr.id]="'accordion-header'"
+                [attr.aria-expanded]="accordionItem.expanded"
+                [attr.aria-controls]="'accordion-body'">
+                <button mat-raised-button class="d-flex align-items-center" (click)="accordionItem.toggle()">
+                  <mat-icon> {{ accordionItem.expanded ? 'lock' : 'lock_open'}}</mat-icon>
+                  <h4 class="m-0">
+                    Invited people
+                  </h4>
+                </button>
+                <div
+                  class="example-accordion-item-body card card-body"
+                  role="region"
+                  [style.display]="accordionItem.expanded ? '' : 'none'"
+                  [attr.id]="'accordion-body'"
+                  [attr.aria-labelledby]="'accordion-header'">
+                  <div *ngFor="let emailInfo of emailList">
+                    <p>To {{emailInfo.email}} for {{emailInfo.name}}</p>
+                  </div>
+                </div>
+              </cdk-accordion-item>
+            </cdk-accordion>
+            </div>
+
           </mat-card>
           <hr/>
           <button mat-raised-button (click)="onOpenAbout()">
@@ -67,9 +97,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public todoError: Error | null = null;
   public emailSenderError: Error | null = null;
+  public emailSenderSuccess: EmailFormSuccessModel | null = null;
 
-  constructor(private storeIssue: Store<{ issueList: issueState}>,
-    private storeEmailSender: Store<{ emailSender: EmailSenderState }>) {
+  public expandedIndex = 0;
+
+  constructor(private storeIssue: Store<{ issueList: issueState }>,
+              private storeEmailSender: Store<{ emailSender: EmailSenderState }>) {
     this.issueList$ = storeIssue.pipe(select('issueList'));
     this.emailSender$ = storeEmailSender.pipe(select('emailSender'));
   }
@@ -78,7 +111,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.issueListSubscription = this.issueList$
       .pipe(
         map(x => {
-          debugger
           this.issueList = x.ToDos || [];
           this.todoError = x.ToDoError;
         })
@@ -88,9 +120,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.emailSenderSubscription = this.emailSender$
       .pipe(
         map((emailInfo: EmailSenderState) => {
-          debugger
           this.emailList = emailInfo.emailInforms || [];
           this.emailSenderError = emailInfo.emailInformError;
+          this.emailSenderSuccess = emailInfo.emailInformSuccess;
         })
       ).subscribe();
 
@@ -99,8 +131,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public onSendEmail(model: EmailSenderModel): void {
-    debugger
-    console.log(model);
+    const emailList: EmailSenderModel[] = [model];
+    this.storeIssue.dispatch(EmailSenderActions.CreateEmailSenderAction({payload: emailList}));
   }
 
   public onEditIssue(issue: Issue): void {
