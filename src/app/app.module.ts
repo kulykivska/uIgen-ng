@@ -23,6 +23,7 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import {MatIconModule} from "@angular/material/icon";
 import {AboutComponent} from "./components/about/about.component";
+import {SendEmailComponent} from "./components/send-email/send-email.component";
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import {AboutComponent} from "./components/about/about.component";
     TabComponent,
     DynamicTabsDirective,
     PeopleListComponent,
-    PersonEditComponent
+    PersonEditComponent,
+    SendEmailComponent
   ],
   imports: [
     BrowserModule,
