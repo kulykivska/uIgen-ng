@@ -24,6 +24,7 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import {MatIconModule} from "@angular/material/icon";
 import {AboutComponent} from "./components/about/about.component";
 import {SendEmailComponent} from "./components/send-email/send-email.component";
+import {emailSenderReducer} from "./state/reducers/emailSender.reducer";
 
 
 @NgModule({
@@ -48,7 +49,7 @@ import {SendEmailComponent} from "./components/send-email/send-email.component";
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    StoreModule.forRoot({todos: ToDoReducer}),
+    StoreModule.forRoot({todos: ToDoReducer, emailForm: emailSenderReducer}),
     EffectsModule.forRoot([ToDoEffects]),
     FormlyModule.forRoot({ extras: { lazyRender: true } }),
     ReactiveFormsModule,

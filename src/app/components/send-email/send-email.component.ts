@@ -1,19 +1,18 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {EmailValidator, FormGroup} from "@angular/forms";
-import {EmailFormInterface} from "./emailForm.interface";
 import {FormlyFieldConfig, FormlyFormOptions} from "@ngx-formly/core";
 import AppValues from "../../common/app.values";
+import {EmailSenderModel} from "../../state/emailSender.model";
 
 @Component({
   selector: 'send-email',
   template: `
     <form [formGroup]="form" (ngSubmit)="onSubmit(emailModel)">
       <formly-form [form]="form" [fields]="fields" [model]="emailModel" [options]="options"></formly-form>
-      <button mat-raised-button type="submit">Submit</button>
+      <button mat-raised-button color="primary" class="mt-3" type="submit">Submit</button>
     </form>
 
-    <hr/>
-    <div *ngIf="emailFormSuccess?.message">
+    <div *ngIf="emailFormSuccess?.message" class="mt-3">
       <div class="alert alert-success" role="alert" id="emailFormSuccessMessage">
         {{emailFormSuccess?.message}}
       </div>
@@ -21,10 +20,10 @@ import AppValues from "../../common/app.values";
   `
 })
 export class SendEmailComponent {
-  @Output() sendEmail = new EventEmitter<EmailFormInterface>();
+  @Output() sendEmail = new EventEmitter<EmailSenderModel>();
 
   public emailFormSuccess: { name: string; message: string; } = {name: '', message: ''};
-  public emailModel: EmailFormInterface = {email: '', name: ''};
+  public emailModel: EmailSenderModel = {email: '', name: ''};
   public form = new FormGroup({});
   public options: FormlyFormOptions = {};
   public fields: FormlyFieldConfig[] = [
@@ -48,6 +47,7 @@ export class SendEmailComponent {
     {
       key: 'name',
       type: 'input',
+      className: 'mt-2 d-block',
       templateOptions: {
         label: 'First name',
         placeholder: 'Enter your first name',
@@ -58,7 +58,7 @@ export class SendEmailComponent {
 
   constructor() { }
 
-  public onSubmit(model: EmailFormInterface): void {
+  public onSubmit(model: EmailSenderModel): void {
     if (this.form.valid) {
       this.sendEmail.emit(model);
 

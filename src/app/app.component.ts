@@ -2,18 +2,13 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import {TabsComponent} from './tabs/app-tabs.component';
-import {FormGroup} from "@angular/forms";
-import {FormlyFieldConfig} from "@ngx-formly/core";
 import {select, Store} from "@ngrx/store";
 import ToDoState from "./state/todo.state";
 import {Observable, Subscription} from "rxjs";
 import ToDo, {PriorityType} from "./state/todo.model";
 import * as ToDoActions from "./state/actions/todo.action";
 import {map} from "rxjs/operators";
-import {BeginEditToDoAction} from "./state/actions/todo.action";
-import {TabComponent} from "./tabs/tab/app-tab.component";
-import {PersonEditComponent} from "./people/person-edit.component";
-import {EmailFormInterface} from "./components/send-email/emailForm.interface";
+import {EmailSenderModel} from "./state/emailSender.model";
 
 @Component({
   selector: 'app',
@@ -21,9 +16,8 @@ import {EmailFormInterface} from "./components/send-email/emailForm.interface";
     <div class="container">
       <app-tabs>
         <my-tab [tabTitle]="'ToDo List'">
-          <h3>{{ ToDoList.length }} Issues: </h3>
-          <hr/>
           <mat-card>
+            <h3>{{ ToDoList.length }} Issues: </h3>
             <people-list
               [ToDoList]="ToDoList"
               (createIssue)="createNewIssue()"
@@ -82,7 +76,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.store.dispatch(ToDoActions.BeginGetToDoAction());
   }
 
-  public onSendEmail(model: EmailFormInterface): void {
+  public onSendEmail(model: EmailSenderModel): void {
     console.log(model);
   }
 

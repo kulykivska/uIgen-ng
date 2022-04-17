@@ -6,7 +6,6 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as ToDoActions from '../actions/todo.action';
 import { ToDoHttpService } from '../httpservices/todo.httpservice';
 import ToDo from '../todo.model';
-import {BeginEditToDoAction} from "../actions/todo.action";
 
 @Injectable()
 export class ToDoEffects {

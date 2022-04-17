@@ -2,7 +2,6 @@ import { Action, createReducer, on } from '@ngrx/store';
 import * as ToDoActions from '../actions/todo.action';
 import ToDo from '../todo.model';
 import ToDoState, { initializeState } from '../todo.state';
-import {SuccessEditToDoAction} from "../actions/todo.action";
 
 const initialState = initializeState();
 

@@ -1,4 +1,4 @@
-export interface EmailFormInterface {
+export interface EmailFormSuccessInterface {
   name: string;
-  email: string;
+  message: string;
 }
