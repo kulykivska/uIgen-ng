@@ -1,6 +1,6 @@
 import {FormGroup, ValidatorFn} from '@angular/forms';
 
-export interface Tabs {
+export interface Tab {
   tabId: string;
   tabName: string;
   tabContent: TabContent
@@ -11,11 +11,29 @@ export interface TabContent {
 }
 export interface TabContentElement {
   type: ComponentInfoType;
-  data: FormConstructorContent | string;
+  data: FormConstructorContent | BoxConstructorContent;
 }
 export enum ComponentInfoType {
   box = 'box',
   form = 'form'
+}
+export enum FormTypes {
+  BASE='base',
+  USER = 'user',
+  ISSUE = 'issue',
+}
+export interface BoxConstructorContent {
+  attributes: DOMAttribute[];
+  data: AttributeValue[] | {};
+}
+export interface DOMAttribute {
+  name_attribute: string;
+  type_attribute: string;
+  read_only: boolean;
+  data_test_id: string;
+  value_class_front?: string;
+  elementStyles?: ElementStyles;
+  child_name_attribute?: DOMAttribute[];
 }
 export interface FormConstructorContent {
   formAttribute?: FormAttribute;
@@ -66,7 +84,7 @@ export interface FieldAttribute {
 }
 
 export interface FormAttribute {
-  type: string;
+  type: FormTypes;
   titleId?: string;
   dataTestId: string;
 }
