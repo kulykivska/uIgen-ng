@@ -1,4 +1,5 @@
 import {
+  AppTab,
   Attribute, AttributeValue,
   ComponentInfoType,
   ElementStyles,
@@ -8,40 +9,27 @@ import {
 } from "../app/interfaces/form-and-field.interface";
 import {ValidatorFn} from "@angular/forms";
 
-export const tabListData: Tab[] =  [
+export const tabListData: AppTab[] =  [
   {
-    tabId: '0',
-    tabName: 'Tab#1',
+    id: '0',
+    name: 'Tab#1',
     tabContent: {
       elements: [
         {
           type: ComponentInfoType.form,
           data: {
-            formAttribute: {
-              type: FormTypes.USER,
-              titleId: 'userForm',
-              dataTestId: 'userForm'
-            },
-            fieldAttributes: [
-              {
+            fieldAttributes: [{
                 elementDataTestId: 'firstName',
                 id: 'firstName',
                 errorDataTestId: 'firstNameError',
                 backendAttribute: {
                   name: 'first_name',
-                  value_class_front: 'formField',
-                  min_length: 3,
-                  max_length: 100,
-                  type_attribute: 'input',
+                  valueClassFront: 'formField',
+                  minLength: 3,
+                  maxLength: 100,
+                  typeAttribute: 'input',
                   required: true,
-                  read_only: false,
-                  label: 'First name',
-                  placeholder: 'First name',
-                  security: false,
-                  enabled_if: {
-                    name: 'firstName',
-                    value: 'John',
-                  }
+                  readOnly: false
                 }
               }
             ],
@@ -55,15 +43,15 @@ export const tabListData: Tab[] =  [
           type: ComponentInfoType.box,
           data: {
             attributes: [{
-              name_attribute: 'block1',
-              type_attribute: 'div',
-              read_only: true,
-              data_test_id: 'block1',
-              child_name_attribute: [{
-                name_attribute: 'text_block1',
-                type_attribute: 'p',
-                read_only: true,
-                data_test_id: 'textBlock1',
+              nameAttribute: 'block1',
+              typeAttribute: 'div',
+              readOnly: true,
+              dataTestId: 'block1',
+              childNameAttribute: [{
+                nameAttribute: 'text_block1',
+                typeAttribute: 'p',
+                readOnly: true,
+                dataTestId: 'textBlock1',
               }]
             }],
             data: [
@@ -78,8 +66,8 @@ export const tabListData: Tab[] =  [
     }
   },
   {
-    tabId: '1',
-    tabName: 'Tab#2',
+    id: '1',
+    name: 'Tab#2',
     tabContent: {
       elements: [
         {
@@ -97,16 +85,16 @@ export const tabListData: Tab[] =  [
                 errorDataTestId: 'firstNameError',
                 backendAttribute: {
                   name: 'first_name',
-                  value_class_front: 'formField',
-                  min_length: 3,
-                  max_length: 100,
-                  type_attribute: 'input',
+                  valueClassFront: 'formField',
+                  minLength: 3,
+                  maxLength: 100,
+                  typeAttribute: 'input',
                   required: true,
-                  read_only: false,
+                  readOnly: false,
                   label: 'First name',
                   placeholder: 'First name',
                   security: false,
-                  enabled_if: {
+                  enabledIf: {
                     name: 'firstName',
                     value: 'John',
                   }
@@ -134,16 +122,16 @@ export const tabListData: Tab[] =  [
                 errorDataTestId: 'firstNameError',
                 backendAttribute: {
                   name: 'first_name',
-                  value_class_front: 'formField',
-                  min_length: 3,
-                  max_length: 100,
-                  type_attribute: 'input',
+                  valueClassFront: 'formField',
+                  minLength: 3,
+                  maxLength: 100,
+                  typeAttribute: 'input',
                   required: true,
-                  read_only: false,
+                  readOnly: false,
                   label: 'First name',
                   placeholder: 'First name',
                   security: false,
-                  enabled_if: {
+                  enabledIf: {
                     name: 'firstName',
                     value: 'John',
                   }
@@ -160,23 +148,23 @@ export const tabListData: Tab[] =  [
     }
   },
   {
-    tabId: '2',
-    tabName: 'Tab#3',
+    id: '2',
+    name: 'Tab#3',
     tabContent: {
       elements: [
         {
           type: ComponentInfoType.box,
           data: {
             attributes: [{
-              name_attribute: 'block1',
-              type_attribute: 'div',
-              read_only: true,
-              data_test_id: 'block1',
-              child_name_attribute: [{
-                name_attribute: 'text_block1',
-                type_attribute: 'p',
-                read_only: true,
-                data_test_id: 'textBlock1',
+              nameAttribute: 'block1',
+              typeAttribute: 'div',
+              readOnly: true,
+              dataTestId: 'block1',
+              childNameAttribute: [{
+                nameAttribute: 'text_block1',
+                typeAttribute: 'p',
+                readOnly: true,
+                dataTestId: 'textBlock1',
               }]
             }],
             data: [
@@ -191,15 +179,15 @@ export const tabListData: Tab[] =  [
           type: ComponentInfoType.box,
           data: {
             attributes: [{
-              name_attribute: 'block1',
-              type_attribute: 'div',
-              read_only: true,
-              data_test_id: 'block1',
-              child_name_attribute: [{
-                name_attribute: 'text_block1',
-                type_attribute: 'p',
-                read_only: true,
-                data_test_id: 'textBlock1',
+              nameAttribute: 'block1',
+              typeAttribute: 'div',
+              readOnly: true,
+              dataTestId: 'block1',
+              childNameAttribute: [{
+                nameAttribute: 'text_block1',
+                typeAttribute: 'p',
+                readOnly: true,
+                dataTestId: 'textBlock1',
               }]
             }],
             data: [

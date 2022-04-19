@@ -1,15 +1,15 @@
 import {ValidatorFn} from '@angular/forms';
 
-export interface Tab {
-  tabId: string;
-  tabName: string;
+export interface AppTab {
+  id: string;
+  name: string;
   tabContent: TabContent
 }
 export interface TabContent {
-  elements: TabContentElement[];
+  elements: AppTabContentElement[];
   valueClassFront?: string;
 }
-export interface TabContentElement {
+export interface AppTabContentElement {
   type: ComponentInfoType;
   data: FormConstructorContent | BoxConstructorContent;
 }
@@ -56,8 +56,8 @@ export interface Attribute {
   readOnly: boolean;
   label?: string;
   viewLabel?: string;
-  placeholder: string;
-  security: boolean;
+  placeholder?: string;
+  security?: boolean;
   enabledIf?: AttributeValue;
 }
 
