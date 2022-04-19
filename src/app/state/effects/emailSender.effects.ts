@@ -5,12 +5,12 @@ import {Observable, of} from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as EmailSenderActions from '../actions/emailSender.action';
 import {EmailSenderModel} from "../emailSender.model";
-import {EmailSenderHttpService} from "../httpservices/emailSender.httpservice";
+import {EmailSenderService} from "../httpservices/emailSender.service";
 
 
 @Injectable()
 export class EmailSenderEffects {
-  constructor(private emailSenderService: EmailSenderHttpService, private action$: Actions) {}
+  constructor(private emailSenderService: EmailSenderService, private action$: Actions) {}
 
   GetEmails$: Observable<Action> = createEffect(() =>
     this.action$.pipe(

@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import {Observable, of, pipe} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as IssueActions from '../actions/issue.action';
-import { IssueHttpService } from '../httpservices/issue-http.service';
+import { IssueService } from '../httpservices/issue.service';
 import Issue from '../issue.model';
 
 @Injectable()
 export class IssueEffects {
-  constructor(private todoService: IssueHttpService, private action$: Actions) {}
+  constructor(private issueService: IssueService, private action$: Actions) {}
 
   GetIssueList$: Observable<Action> = createEffect(() =>
     this.action$.pipe(
       ofType(IssueActions.BeginGetIssueAction),
       mergeMap(action =>
-        this.todoService.getIssueList().pipe(
+        this.issueService.getIssueList().pipe(
           map((data: Issue[]) => {
             return IssueActions.SuccessGetIssueAction({ payload: data });
           }),
@@ -34,7 +34,7 @@ export class IssueEffects {
             return of(IssueActions.SuccessCreateIssueAction({payload: action.payload}))
           }
           // Here should be request
-          // this.todoService.createNewIssue(action.payload).pipe(
+          // this.issueService.createNewIssue(action.payload).pipe(
           //   map((data: Issue) => {
           //     return ToDoActions.SuccessCreateToDoAction({payload: data});
           //   }),

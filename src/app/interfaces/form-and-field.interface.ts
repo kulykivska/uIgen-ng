@@ -1,4 +1,4 @@
-import {FormGroup, ValidatorFn} from '@angular/forms';
+import {ValidatorFn} from '@angular/forms';
 
 export interface Tab {
   tabId: string;
@@ -7,7 +7,7 @@ export interface Tab {
 }
 export interface TabContent {
   elements: TabContentElement[];
-  value_class_front?: string;
+  valueClassFront?: string;
 }
 export interface TabContentElement {
   type: ComponentInfoType;
@@ -27,13 +27,13 @@ export interface BoxConstructorContent {
   data: AttributeValue[] | {};
 }
 export interface DOMAttribute {
-  name_attribute: string;
-  type_attribute: string;
-  read_only: boolean;
-  data_test_id: string;
-  value_class_front?: string;
+  nameAttribute: string;
+  typeAttribute: string;
+  readOnly: boolean;
+  dataTestId: string;
+  valueClassFront?: string;
   elementStyles?: ElementStyles;
-  child_name_attribute?: DOMAttribute[];
+  childNameAttribute?: DOMAttribute[];
 }
 export interface FormConstructorContent {
   formAttribute?: FormAttribute;
@@ -48,17 +48,17 @@ export interface AttributeValue {
 
 export interface Attribute {
   name: string;
-  value_class_front: string;
-  min_length: number;
-  max_length: number;
-  type_attribute: string;
+  valueClassFront: string;
+  minLength: number;
+  maxLength: number;
+  typeAttribute: string;
   required: boolean;
-  read_only: boolean;
+  readOnly: boolean;
   label?: string;
-  view_label?: string;
+  viewLabel?: string;
   placeholder: string;
   security: boolean;
-  enabled_if?: AttributeValue;
+  enabledIf?: AttributeValue;
 }
 
 export interface Attributes {
@@ -92,4 +92,25 @@ export interface FormAttribute {
 export interface SelectorOption {
   entity_id: string;
   title: string;
+}
+
+
+
+export interface Tab {
+  id: string;
+  options?: {
+    label: string;
+    disable?: boolean;
+  }
+}
+
+export interface TabContentElement {
+  id: string;
+  tabID: string;
+  elements: FieldAttribute[];
+}
+
+export interface ContentData {
+  tabContentId: string;
+  value: {[prop: string]: any}
 }

@@ -2,7 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 
 import {TabsComponent} from './tabs/app-tabs.component';
 import {select, Store} from "@ngrx/store";
-import issueState from "./state/issueState";
+import IssueState from "./state/issue.state";
 import {Observable, Subscription} from "rxjs";
 import Issue, {PriorityType} from "./state/issue.model";
 import * as ToDoActions from "./state/actions/issue.action";
@@ -87,7 +87,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('about') aboutTemplate: ElementRef | undefined;
   @ViewChild(TabsComponent) tabsComponent!: TabsComponent;
 
-  public issueList$: Observable<issueState>;
+  public issueList$: Observable<IssueState>;
   public emailSender$: Observable<EmailSenderState>;
   public issueListSubscription: Subscription | undefined;
   public emailSenderSubscription: Subscription | undefined;
@@ -98,7 +98,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public emailSenderError: Error | null = null;
   public emailSenderSuccess: EmailFormSuccessModel | null = null;
 
-  constructor(private storeIssue: Store<{ issueList: issueState }>,
+  constructor(private storeIssue: Store<{ issueList: IssueState }>,
               private storeEmailSender: Store<{ emailSender: EmailSenderState }>) {
     this.issueList$ = storeIssue.pipe(select('issueList'));
     this.emailSender$ = storeEmailSender.pipe(select('emailSender'));
@@ -108,8 +108,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.issueListSubscription = this.issueList$
       .pipe(
         map(x => {
-          this.issueList = x.ToDos || [];
-          this.todoError = x.ToDoError;
+          this.issueList = x.issues || [];
+          this.todoError = x.issueError;
         })
       )
       .subscribe();

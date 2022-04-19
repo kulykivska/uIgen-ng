@@ -17,8 +17,8 @@ import {CdkAccordionModule} from '@angular/cdk/accordion';
 import {MatCardModule} from "@angular/material/card";
 import { StoreModule } from '@ngrx/store';
 
-import { IssueEffects } from "./state/effects/issue-effects.service";
-import {issueReducer} from "./state/reducers/issueReducer";
+import { IssueEffects } from "./state/effects/issue.effects";
+import {issueReducer} from "./state/reducers/issue.reducer";
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import {MatIconModule} from "@angular/material/icon";

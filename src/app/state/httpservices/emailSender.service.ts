@@ -7,7 +7,7 @@ import {emailListData} from "../../../assets/emailList.data";
 @Injectable({
   providedIn: 'root'
 })
-export class EmailSenderHttpService {
+export class EmailSenderService {
   constructor(private httpclient: HttpClient) {}
 
   public getEmails(): Observable<EmailSenderModel[]> {

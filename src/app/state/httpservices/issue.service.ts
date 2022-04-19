@@ -7,7 +7,7 @@ import {issueListData} from 'src/assets/IssueListData';
 @Injectable({
   providedIn: 'root'
 })
-export class IssueHttpService {
+export class IssueService {
   constructor(private httpclient: HttpClient) {}
 
   public getIssueList(): Observable<Issue[]> {

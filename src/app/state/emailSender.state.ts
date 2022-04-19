@@ -6,6 +6,6 @@ export default class EmailSenderState {
   emailInformError!: Error | null;
 }
 
-export const initializeEmailState = (): { emailInforms: EmailSenderModel[]; emailInformError: null; emailInformSuccess: null } => {
+export const initializeEmailState = (): EmailSenderState => {
   return { emailInforms: Array<EmailSenderModel>(), emailInformError: null, emailInformSuccess: null };
 };

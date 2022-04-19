@@ -1,11 +1,11 @@
 import { ActionReducerMap } from "@ngrx/store";
-import {issueReducer} from "./reducers/issueReducer";
+import {issueReducer} from "./reducers/issue.reducer";
 import {emailSenderReducer} from "./reducers/emailSender.reducer";
 import EmailSenderState from "./emailSender.state";
-import issueState from "./issueState";
+import IssueState from "./issue.state";
 
 interface AppState {
-  issueList: issueState;
+  issueList: IssueState;
   emailSender: EmailSenderState;
 }
 
